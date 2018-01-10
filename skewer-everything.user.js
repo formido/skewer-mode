@@ -1,13 +1,15 @@
 // ==UserScript==
-// @name         Skewer Everything
+// @name         Skewer Everything [Tampermonkey fix]
 // @description  Add a toggle button to run Skewer on the current page
-// @lastupdated  2015-09-14
-// @version      1.3
+// @lastupdated  2017-01-10
+// @version      1.3.1
 // @license      Public Domain
 // @include      /^https?:///
 // @grant        none
-// @run-at       document-start
+// @run-at       document-end
 // ==/UserScript==
+
+console.log("Debugging skewer-mode!");
 
 window.skewerNativeXHR = XMLHttpRequest;
 window.skewerInject = inject;
@@ -43,12 +45,46 @@ function inject() {
     localStorage._autoskewered = JSON.stringify(injected);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+function maybeInject() {
+    console.log("Testing, testing Will Robinson!");
     /* Don't use on iframes. */
+    console.log(window.top);
+    console.log(window.self);
     if (window.top === window.self) {
+        console.log("hello");
         document.body.appendChild(toggle);
         if (JSON.parse(localStorage._autoskewered || 'false')) {
             inject();
         }
     }
-});
+}
+
+console.log("before anon");
+
+(function() {
+    'use strict';
+
+    if (document.readyState == "complete" || document.readyState == "loaded" || document.readyState == "interactive") {
+        maybeInject();
+    } else {
+        document.addEventListener("DOMContentLoaded", function(event) {
+            maybeInject();
+        });
+    }
+})();
+
+console.log('after anon');
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     console.log("Testing, testing Will Robinson!");
+//     /* Don't use on iframes. */
+//     console.log(window.top);
+//     console.log(window.self);
+//     if (window.top === window.self) {
+//         console.log("hello");
+//         document.body.appendChild(toggle);
+//         if (JSON.parse(localStorage._autoskewered || 'false')) {
+//             inject();
+//         }
+//     }
+// });
