@@ -9,8 +9,6 @@
 // @run-at       document-end
 // ==/UserScript==
 
-console.log("Debugging skewer-mode!");
-
 window.skewerNativeXHR = XMLHttpRequest;
 window.skewerInject = inject;
 
@@ -46,20 +44,14 @@ function inject() {
 }
 
 function maybeInject() {
-    console.log("Testing, testing Will Robinson!");
     /* Don't use on iframes. */
-    console.log(window.top);
-    console.log(window.self);
     if (window.top === window.self) {
-        console.log("hello");
         document.body.appendChild(toggle);
         if (JSON.parse(localStorage._autoskewered || 'false')) {
             inject();
         }
     }
 }
-
-console.log("before anon");
 
 (function() {
     'use strict';
@@ -72,19 +64,3 @@ console.log("before anon");
         });
     }
 })();
-
-console.log('after anon');
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     console.log("Testing, testing Will Robinson!");
-//     /* Don't use on iframes. */
-//     console.log(window.top);
-//     console.log(window.self);
-//     if (window.top === window.self) {
-//         console.log("hello");
-//         document.body.appendChild(toggle);
-//         if (JSON.parse(localStorage._autoskewered || 'false')) {
-//             inject();
-//         }
-//     }
-// });
