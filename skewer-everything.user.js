@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Skewer Everything [Tampermonkey fix]
+// @name         Skewer Everything [Tampermonkey fix -- https://github.com/formido/skewer-mode/raw/tampermonkey-fix/skewer-everything.user.js]
 // @description  Add a toggle button to run Skewer on the current page
 // @lastupdated  2017-01-10
 // @version      1.3.1
